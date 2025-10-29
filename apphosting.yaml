@@ -9,7 +9,7 @@ services:
     env:
       # ✅ Public env vars (available at BUILD + RUNTIME)
       - variable: NEXT_PUBLIC_FIREBASE_API_KEY
-        value: AIzaSyDAPPvXjDLNt0ZugB92q6GXAwv10Y53gVw
+        value: AIzaSyBNwii__SATBn_pBwHHlKWhzD8UtZiYSp0
         availability: [BUILD, RUNTIME]
 
       - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
@@ -39,7 +39,6 @@ services:
       # ✅ Will update to live URL after first deploy
       - variable: PUBLIC_APP_URL
         value: https://buckingham-secret-santa-app--buckingham-secret-santa.us-central1.hosted.app/admin
-        availability: [RUNTIME]
 
       # ✅ Secrets (RUNTIME only)
       - variable: FIREBASE_PROJECT_ID

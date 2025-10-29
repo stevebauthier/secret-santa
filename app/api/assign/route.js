@@ -50,7 +50,7 @@ export async function POST() {
         `Hey {{giverName}}!\n\nYou’ve been assigned: {{receiverName}} ({{receiverNickname}})\nContact: {{receiverEmail}}\n\nManage suggestions here:\n{{participantLink}}\n\nHappy gifting! 🎄`;
 
     // Email assignments
-    const baseUrl = process.env.PUBLIC_APP_URL || 'http://localhost:3000';
+    const baseUrl = process.env.PUBLIC_APP_URL || 'https://buckingham-secret-santa-app--buckingham-secret-santa.us-central1.hosted.app/';
     await Promise.all(
         participants.map(async (p, i) => {
             const receiver = perm[i];
