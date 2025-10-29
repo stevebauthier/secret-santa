@@ -1,16 +1,29 @@
 import { NextResponse } from 'next/server';
-import { dbAdmin } from '../../../lib/firebaseAdmin';
+import admin from 'firebase-admin';
 
 function uid() {
     return Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+}
+
+function getDb() {
+    if (!admin.apps.length) {
+        admin.initializeApp({
+            credential: admin.credential.cert({
+                projectId: process.env.FIREBASE_PROJECT_ID,
+                clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+                privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+            }),
+            databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+        });
+    }
+    return admin.database();
 }
 
 export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const settingsOnly = searchParams.get('settings');
     const token = searchParams.get('token');
-
-    const db = dbAdmin;
+    const db = getDb();
 
     if (settingsOnly) {
         const snap = await db.ref('/settings/messageTemplate').get();
@@ -21,26 +34,32 @@ export async function GET(req) {
     const map = pSnap.val() || {};
     const arr = Object.values(map);
 
-    // If token present, return "me" + everyone list
+    const byId = Object.fromEntries(arr.map(p => [p.id, p]));
+
     if (token) {
         const me = arr.find(p => p.token === token) || null;
-        const byId = Object.fromEntries(arr.map(p => [p.id, p]));
         const full = arr.map(p => ({
             ...p,
-            assignedToName: p.assignedToId ? `${byId[p.assignedToId]?.name || ''} ${byId[p.assignedToId]?.surname || ''}`.trim() : null,
+            assignedToName: p.assignedToId
+                ? `${byId[p.assignedToId]?.name || ''} ${byId[p.assignedToId]?.surname || ''}`.trim()
+                : null,
         }));
-        const meOut = me ? {
-            ...me,
-            assignedToName: me.assignedToId ? `${byId[me.assignedToId]?.name || ''} ${byId[me.assignedToId]?.surname || ''}`.trim() : null,
-        } : null;
+        const meOut = me
+            ? {
+                ...me,
+                assignedToName: me.assignedToId
+                    ? `${byId[me.assignedToId]?.name || ''} ${byId[me.assignedToId]?.surname || ''}`.trim()
+                    : null,
+            }
+            : null;
         return NextResponse.json({ me: meOut, participants: full });
     }
 
-    // Admin list (with resolved assignedTo names)
-    const byId = Object.fromEntries(arr.map(p => [p.id, p]));
     const out = arr.map(p => ({
         ...p,
-        assignedToName: p.assignedToId ? `${byId[p.assignedToId]?.name || ''} ${byId[p.assignedToId]?.surname || ''}`.trim() : null,
+        assignedToName: p.assignedToId
+            ? `${byId[p.assignedToId]?.name || ''} ${byId[p.assignedToId]?.surname || ''}`.trim()
+            : null,
     }));
     return NextResponse.json({ participants: out });
 }
@@ -49,7 +68,7 @@ export async function POST(req) {
     const { searchParams } = new URL(req.url);
     const settingsOnly = searchParams.get('settings');
     const body = await req.json();
-    const db = dbAdmin;
+    const db = getDb();
 
     if (settingsOnly) {
         const { messageTemplate } = body;
@@ -65,6 +84,18 @@ export async function POST(req) {
     const id = uid();
     const token = uid();
     const createdAt = Date.now();
-    await db.ref(`/participants/${id}`).set({ id, name, surname, nickname: nickname || '', email, token, assignedToId: null, createdAt });
+    await db
+        .ref(`/participants/${id}`)
+        .set({
+            id,
+            name,
+            surname,
+            nickname: nickname || '',
+            email,
+            token,
+            assignedToId: null,
+            createdAt,
+        });
+
     return NextResponse.json({ ok: true, id });
 }
