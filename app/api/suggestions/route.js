@@ -48,7 +48,7 @@ export async function POST(req) {
                 to: assignee.email,
                 authorName: me.name,
                 targetName: `${byId[targetId].name} ${byId[targetId].surname}`.trim(),
-                participantLink: `${baseUrl}/p/${encodeURIComponent(assignee.token)}`,
+                suggestion: text,
             });
         }
 

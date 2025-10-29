@@ -44,7 +44,7 @@ export async function POST() {
         await Promise.all(
             participants.map(async (p, i) => {
                 const receiver = perm[i];
-                const participantLink = `${baseUrl}/p/${encodeURIComponent(p.token)}`;
+                const participantLink = `${baseUrl}p/${encodeURIComponent(p.token)}`;
 
                 await sendAssignmentEmail({
                     to: p.email,
