@@ -7,14 +7,10 @@ export const dynamic = 'force-dynamic';
 
 
 function getDb() {
-    // Only initialize once, and only in runtime
     if (!admin.apps.length) {
         admin.initializeApp({
-            credential: admin.credential.cert({
-                projectId: process.env.FIREBASE_PROJECT_ID,
-                clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-                privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-            }),
+            // ADC: picks up the App Hosting service identity automatically
+            credential: admin.credential.applicationDefault(),
             databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
         });
     }
