@@ -19,6 +19,10 @@ services:
         value: https://buckingham-secret-santa-default-rtdb.europe-west1.firebasedatabase.app
         availability: [BUILD, RUNTIME]
 
+      - variable: FIREBASE_DATABASE_URL
+        value: https://buckingham-secret-santa-default-rtdb.europe-west1.firebasedatabase.app
+        availability: [RUNTIME]
+
       - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
         value: buckingham-secret-santa
         availability: [BUILD, RUNTIME]
