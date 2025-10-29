@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { sendAssignmentEmail } from '../../../lib/email';
 import { sattoloDerangement } from '../../../lib/derangement';
 import admin from 'firebase-admin';
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 
 function getDb() {
     // Only initialize once, and only in runtime

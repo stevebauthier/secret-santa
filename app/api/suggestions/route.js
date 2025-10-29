@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import admin from 'firebase-admin';
 import { sendSuggestionNotification } from '../../../lib/email';
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 
 function uid() {
     return Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
