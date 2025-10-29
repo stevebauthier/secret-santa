@@ -38,7 +38,7 @@ services:
 
       # ✅ Will update to live URL after first deploy
       - variable: PUBLIC_APP_URL
-        value: https://placeholder.local
+        value: https://buckingham-secret-santa-app--buckingham-secret-santa.us-central1.hosted.app/admin
         availability: [RUNTIME]
 
       # ✅ Secrets (RUNTIME only)
@@ -77,3 +77,8 @@ services:
       - variable: MAIL_FROM
         secret: MAIL_FROM
         availability: [RUNTIME]
+env:
+  - variable: S_NEXT_FIREBASE_PROJECT_ID
+    secret: FIREBASE_PROJECT_ID
+  - variable: S_NEXT_FIREBASE_PRIVATE_KEY
+    secret: FIREBASE_PRIVATE_KEY
