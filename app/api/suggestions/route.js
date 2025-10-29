@@ -2,7 +2,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
-import { getDb } from '../../lib/getDb';
+import { getDb } from '../../../lib/getDb';
 import { sendSuggestionNotification } from '../../../lib/email';
 
 

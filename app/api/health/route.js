@@ -1,7 +1,7 @@
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-import { getDb } from '../../lib/getDb';
+import { getDb } from '../../../lib/getDb';
 import { NextResponse } from 'next/server';
 
 

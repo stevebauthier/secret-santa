@@ -2,9 +2,9 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
-import { getDb } from '../../lib/getDb';
-import { sendAssignmentEmail } from '../../lib/email';
-import { sattoloDerangement } from '../../lib/derangement';
+import { getDb } from '../../../lib/getDb';
+import { sendAssignmentEmail } from '../../../lib/email';
+import { sattoloDerangement } from '../../../lib/derangement';
 
 
 export async function POST() {
