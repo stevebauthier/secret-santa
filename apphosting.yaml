@@ -7,9 +7,10 @@ services:
     source:
       repo: .
     env:
-      # ✅ Public env vars (available at BUILD + RUNTIME)
+      # --- Public (client) envs: build + runtime ---
       - variable: NEXT_PUBLIC_FIREBASE_API_KEY
         value: AIzaSyBNwii__SATBn_pBwHHlKWhzD8UtZiYSp0
+        availability: [BUILD, RUNTIME]
 
       - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
         value: buckingham-secret-santa.firebaseapp.com
@@ -35,11 +36,12 @@ services:
         value: 1:507395963979:web:f61a4daee0b4484363e1ce
         availability: [BUILD, RUNTIME]
 
-      # ✅ Will update to live URL after first deploy
+      # --- App URL for links in emails (ROOT domain; no path) ---
       - variable: PUBLIC_APP_URL
-        value: https://buckingham-secret-santa-app--buckingham-secret-santa.us-central1.hosted.app/admin
+        value: https://buckingham-secret-santa-app--buckingham-secret-santa.us-central1.hosted.app
+        availability: [RUNTIME]
 
-      # ✅ Secrets (RUNTIME only)
+      # --- Server-only secrets (runtime only) ---
       - variable: FIREBASE_PROJECT_ID
         secret: FIREBASE_PROJECT_ID
         availability: [RUNTIME]
@@ -52,6 +54,7 @@ services:
         secret: FIREBASE_PRIVATE_KEY
         availability: [RUNTIME]
 
+      # Email secrets are optional for now (assign route will need them)
       - variable: SMTP_HOST
         secret: SMTP_HOST
         availability: [RUNTIME]
@@ -75,10 +78,3 @@ services:
       - variable: MAIL_FROM
         secret: MAIL_FROM
         availability: [RUNTIME]
-env:
-  - variable: S_NEXT_FIREBASE_PROJECT_ID
-    secret: FIREBASE_PROJECT_ID
-  - variable: S_NEXT_FIREBASE_PRIVATE_KEY
-    secret: FIREBASE_PRIVATE_KEY
-  - variable: SMTP_HOST
-    secret: SMTP_HOST
