@@ -10,7 +10,6 @@ services:
       # ✅ Public env vars (available at BUILD + RUNTIME)
       - variable: NEXT_PUBLIC_FIREBASE_API_KEY
         value: AIzaSyBNwii__SATBn_pBwHHlKWhzD8UtZiYSp0
-        availability: [BUILD, RUNTIME]
 
       - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
         value: buckingham-secret-santa.firebaseapp.com
@@ -81,3 +80,5 @@ env:
     secret: FIREBASE_PROJECT_ID
   - variable: S_NEXT_FIREBASE_PRIVATE_KEY
     secret: FIREBASE_PRIVATE_KEY
+  - variable: SMTP_HOST
+    secret: SMTP_HOST
