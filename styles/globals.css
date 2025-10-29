@@ -1,0 +1,19 @@
+html,
+body {
+  height: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  padding: 8px;
+}
+button {
+  cursor: pointer;
+}
+table th,
+table td {
+  border-bottom: 1px solid #eee;
+  padding: 8px;
+}
