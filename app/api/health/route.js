@@ -1,19 +1,9 @@
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+import { getDb } from '../../lib/getDb';
 import { NextResponse } from 'next/server';
-import admin from 'firebase-admin';
 
-function getDb() {
-  if (!admin.apps.length) {
-    admin.initializeApp({
-      // ADC: picks up the App Hosting service identity automatically
-      credential: admin.credential.applicationDefault(),
-      databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
-    });
-  }
-  return admin.database();
-}
 
 export async function GET() {
   try {
@@ -29,9 +19,7 @@ export async function GET() {
       foundHealthKey: snap.exists(),
     });
   } catch (e) {
-    return NextResponse.json(
-      { ok: false, error: String(e?.message || e) },
-      { status: 500 }
-    );
+    console.error('health GET error:', String(err));
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
