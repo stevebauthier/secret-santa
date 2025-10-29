@@ -7,7 +7,6 @@ services:
     source:
       repo: .
     env:
-      # --- Public (client) envs: build + runtime ---
       - variable: NEXT_PUBLIC_FIREBASE_API_KEY
         value: AIzaSyBNwii__SATBn_pBwHHlKWhzD8UtZiYSp0
         availability: [BUILD, RUNTIME]
@@ -36,12 +35,10 @@ services:
         value: 1:507395963979:web:f61a4daee0b4484363e1ce
         availability: [BUILD, RUNTIME]
 
-      # --- App URL for links in emails (ROOT domain; no path) ---
       - variable: PUBLIC_APP_URL
         value: https://buckingham-secret-santa-app--buckingham-secret-santa.us-central1.hosted.app
         availability: [RUNTIME]
 
-      # --- Server-only secrets (runtime only) ---
       - variable: FIREBASE_PROJECT_ID
         secret: FIREBASE_PROJECT_ID
         availability: [RUNTIME]
@@ -54,27 +51,4 @@ services:
         secret: FIREBASE_PRIVATE_KEY
         availability: [RUNTIME]
 
-      # Email secrets are optional for now (assign route will need them)
-      - variable: SMTP_HOST
-        secret: SMTP_HOST
-        availability: [RUNTIME]
-
-      - variable: SMTP_PORT
-        secret: SMTP_PORT
-        availability: [RUNTIME]
-
-      - variable: SMTP_SECURE
-        secret: SMTP_SECURE
-        availability: [RUNTIME]
-
-      - variable: SMTP_USER
-        secret: SMTP_USER
-        availability: [RUNTIME]
-
-      - variable: SMTP_PASS
-        secret: SMTP_PASS
-        availability: [RUNTIME]
-
-      - variable: MAIL_FROM
-        secret: MAIL_FROM
-        availability: [RUNTIME]
+      # SMTP_* + MAIL_FROM can stay empty for now while testing non-email routes
