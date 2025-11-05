@@ -149,6 +149,7 @@ export default function AdminPage() {
               <th align="left">Surname</th>
               <th align="left">Nickname</th>
               <th align="left">Email</th>
+              <th align="left">Gifting to</th>
             </tr>
           </thead>
           <tbody>
@@ -158,6 +159,7 @@ export default function AdminPage() {
                 <td>{p.surname}</td>
                 <td>{p.nickname || "—"}</td>
                 <td>{p.email}</td>
+                <td>{p.assignedToName}</td>
               </tr>
             ))}
           </tbody>
